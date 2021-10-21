@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="gayaa.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <head>
+        <title>p info</title>
+    </head>
+    <body>
+        <div ng-app="myApp" ng-controller="myCtrl" ng-init="displayData()" class="body">
+            <!-- <h1 class="wlcm">{{wlcm}}</h1>
+            <h1 class="time">{{time}}</h1> -->
+            <div class="konten"> 
+            <div class="input"> 
+
+                <div ng-show="showMe" >
+                    <form name="inpt">
+                        
+                        <h3>TAMBAH DATA</h3>
+                        <input type="hidden" ng-model="id" name="id" value="{{id}}">
+                        <input type="text" ng-model="namaa" name="nama" placeholder="nama siswa" required>
+                    <input type="text" ng-model="kodee" name="kode" placeholder="kode siswa" required> 
+                    <input type="text" ng-model="numberr" name="number" placeholder="number siswa" required>
+                    <input type="hidden" ng-model="tanggal_dibuat" name="tanggal_dibuat">
+                    <input type="hidden" ng-model="tanggal_diupdate" name="tanggal_diupdate">
+                    <input type="hidden" ng-model="is_active" name="is_active">
+                    <input type="button" value="tambah" ng-disabled="inpt.$invalid" ng-click="insertData()"><br><br>
+                
+                </form>
+            </div>
+            <div ng-show="showupdt">
+                <form name="update">
+                    <h3>UPDATE DATA</h3>
+                    <input type="hidden" ng-model="id" name="id" value="{{id}}">
+                    <input type="text" ng-model="nama" name="nama" placeholder="nama siswa" required>
+                    <input type="text" ng-model="kode" name="kode" placeholder="kode siswa" required> 
+                    <input type="text" ng-model="number" name="number" placeholder="number siswa" required>
+                    <input type="hidden" ng-model="tanggal_dibuat" name="tanggal_dibuat">
+                    <input type="hidden" ng-model="tanggal_diupdate" name="tanggal_diupdate">
+                    <input type="hidden" ng-model="is_active" name="is_active">
+                    <!-- <input type="button" value="update" ng-disabled="inpt.$invalid" ng-click="update()"><br><br> -->
+
+                    <input type="button" value="update" ng-disabled="update.$pristine" ng-click="updateData()"><br><br>
+                </form>
+            </div>
+            </div>
+            <div class="tabeli" >
+            <table cellspacing="0" cellpadding="20"  align="center" style="margin-top: 40px;">
+                <tr class="qw">
+                    <th class="header" colspan="8">TABEL SISWA <input class="plus" type="button" ng-click="myFunc()" value="+"></th>
+                </tr>
+                <tr class="qw">
+                    <th class="p">no</th>
+                    <th class="p">Name</th>
+                    <th class="p">Code</th>
+                    <th class="p">Number</th>
+                    <th class="p" id="png">Created Date</th>
+                    <th class="p">Updated Date</th>
+                    <th class="p" colspan="2">Action</th>
+                </tr>
+                <tr ng-repeat="x in names">
+                    <td>
+                        {{ $index + 1}}
+                    </td>
+                    <td>
+                        {{ x.nama_siswa}}
+                    </td>
+                    <td>
+                        {{ x.kode_siswa }}
+                    </td>
+                    <td>
+                        {{ x.no_telp_siswa }}
+                    </td>
+                    <td>
+                        {{ x.created_date }}
+                    </td>
+                    <td>
+                        {{ x.updated_date }}
+                    </td>
+                    <td ng-show="false">
+                        {{ x.is_active }}
+                    </td>
+                    <td class="pp">
+                        <a class="update" href="#" ng-click="myUpdt(x)">UPDATE</a>
+                    </td>
+                    <td class="pp">
+                        <a class="delete" href="#" ng-click="delete(x)">DELETE</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </div>
+        </div>
+        <script>
+            var app = angular.module('myApp',[]) 
+            app.controller('myCtrl', function($scope, $timeout, $interval, $http) {
+                // READ DATA
+                $scope.displayData = function(){  
+                    $http.post("function2.php") 
+                    .then(function (response) {
+                        console.log(response)
+                        if (response.data.status == 200){
+                            $scope.names = response.data.data
+                            console.log(response)
+                        } else {
+                            alert("error!!!")
+                        }
+                    });
+                }
+                
+                // INSERT DATA
+                $scope.insertData = function(){  
+                    // if (!alert("data berhasil ditambahkan")){return;}
+                    $http.post(  
+                        "insert.php",  
+                        {'nama_siswa':$scope.namaa, 
+                        'kode_siswa':$scope.kodee,
+                        'no_tlpn_siswa':$scope.numberr,
+                        'created_date' : 'now()',
+                        'updated_date' : null
+                    }                       
+                    ).then(function(data){  
+                        alert("data berhasil ditambahkan") 
+                        $scope.namaa = null  
+                        $scope.kodee = null
+                        $scope.numberr = null
+                        $scope.showMe = !$scope.showMe
+                        $scope.displayData() 
+                    });
+                } 
+
+                // DELETE DATA
+                $scope.delete = function(data){  
+                    // confirm("apakah anda ingin menghapus data?")
+                    if (!confirm("apakah anda ingin menghapus data?")){return;} 
+                    $http.post(  
+                        "delete.php",  
+                        {'id': data.id,
+                        'is_active' : false
+                    }
+                    // 'nama_siswa':$scope.nama, 
+                    // 'kode_siswa':$scope.kode,
+                    // 'no_tlpn_siswa':$scope.number}                       
+                    ).then(function(data){     
+                        $scope.displayData() 
+                    }); 
+                }
+             
+
+                //UPDATE DATA
+                $scope.updateData = function(){                     
+                $http.post(  
+                        "update.php",  
+                        {'id': $scope.id,
+                        'nama_siswa':$scope.nama, 
+                        'kode_siswa':$scope.kode,
+                        'no_tlpn_siswa':$scope.number,
+                        'created_date' : $scope.tanggal_dibuat,
+                        'updated_date' :'now()'}                       
+                ).then(function(data){  
+                    // console.info(data)
+                    $scope.showupdt = !$scope.showupdt
+                    $scope.displayData() 
+                    alert("data berhasil diperbarui")                        
+                    }); 
+                }
+
+                // FORM TAMBAH
+                $scope.showMe = false
+                $scope.myFunc = function(){
+                    $scope.showMe = !$scope.showMe
+                }
+                // FORM UPDATE
+                $scope.showupdt = false
+                $scope.myUpdt = function(data){
+                    console.info(data);
+                    $scope.nama = data.nama_siswa
+                    $scope.kode = data.kode_siswa
+                    $scope.number = data.no_telp_siswa
+                    $scope.id = data.id
+                    $scope.tanggal_dibuat = data.created_date
+                    $scope.tanggal_diupdate = data.updated_date
+                    $scope.showupdt = !$scope.showupdt
+                }
+
+                $scope.time = new Date().toLocaleTimeString()
+                $interval(function () {
+                    $scope.time = new Date().toLocaleTimeString()
+                }, 1000)
+                $scope.wlcm = "selamat datang"
+                $timeout (function(){
+                    $scope.wlcm = "TABEL SISWA"
+                }, 4000)
+            });
+        </script>
+    </body>
+</html>

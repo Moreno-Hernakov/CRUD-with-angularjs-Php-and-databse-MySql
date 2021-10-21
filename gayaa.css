@@ -1,0 +1,100 @@
+/* .time {
+    float: right;
+    margin-top: -100px;
+    margin-right: 20px;
+    color: black;
+    background-color: lightblue;
+    padding: 20px;
+    border-radius: 20px;
+} */
+.tabeli{
+    /* border: 1px solid grey; */
+    margin-top: 20px;
+}
+table, th{
+    border: 1px solid rgb(199, 199, 199);
+}
+
+.input {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: -10px;
+    margin-left: 40px;
+}
+/* .konten{
+    adf
+} */
+/* .body{
+    background-color: red;
+} */
+/* .wlcm{
+    color: black;
+    background-color: lightblue;
+    padding: 20px;
+    border-radius: 20px;
+    width: 215px;
+    margin-left: 20px;
+} */
+/* .qw {
+    border: 1px solid red;
+} */
+.tabeli tr:nth-last-child(even){
+    background-color: rgb(226, 226, 226);
+}
+.pp {
+    background-color: white;
+}
+.p {
+    background-color: white;
+}
+.plus {
+    float: right;
+    color: black;
+    background-color: lightblue;
+    border: 0px;
+    font-size: 20px;
+}
+.header{
+    text-align: center;
+    letter-spacing: 10px;
+    word-spacing: 5px;
+    background-color: lightblue;
+}
+.delete {
+    background-color: rgb(247, 191, 191);
+    font-style: italic;
+    font-weight: bold;
+    border-radius:20px;
+    text-decoration: none;
+    padding: 6px 10px;
+    color: black;
+}
+.update {
+    background-color: rgb(191, 248, 191);
+    font-style: italic ;
+    font-weight: bold;
+    border-radius: 20px;
+    text-decoration: none;
+    padding: 6px 10px;
+    color: black;
+}
+#png{
+    border-left:  1px solid rgb(199, 199, 199);
+}
+
+.inputt {
+    margin-left: 450px;
+    margin-bottom: 50px;
+}
+.tabell {
+    margin-left: 300px;
+}
+.tambah {
+    background-color: lightgray;
+    border-radius: 20px;
+    text-decoration: none;
+    padding: 7px 60px;
+    color: black;
+    margin: 0px 30;
+    text-align: center;
+}
